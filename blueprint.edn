@@ -1,0 +1,12 @@
+[{:itonami.blueprint/id "cloud-itonami-isic-9810"
+  :itonami.blueprint/name "Undifferentiated goods-producing activities of private households for own use"
+  :itonami.blueprint/isic-rev4 "9810"
+  :itonami.blueprint/domain :statistics/household-own-account-production-tracking
+  :itonami.blueprint/license "AGPL-3.0-or-later"
+  :itonami.blueprint/social-impact [:food-security :data-sovereignty :rural-development :statistical-visibility]
+  :itonami.blueprint/governor :hhproduction-governor
+  :itonami.blueprint/robotics false
+  :itonami.blueprint/required-technologies [:identity :forms :dmn :bpmn :audit-ledger]
+  :itonami.blueprint/status :public-oss
+  :itonami.blueprint/maturity :implemented
+  :db/id -1}]
