@@ -290,11 +290,11 @@
   (let [acc (atom #{})]
     ((fn walk [v]
        (cond
-         (map? v) (do (doseq [[k vv] v]
-                        (when (and (keyword? k)
-                                   (str/includes? (str/lower-case (name k)) "approv"))
-                          (swap! acc conj k))
-                        (walk vv)))
+         (map? v) (doseq [[k vv] v]
+                    (when (and (keyword? k)
+                               (str/includes? (str/lower-case (name k)) "approv"))
+                      (swap! acc conj k))
+                    (walk vv))
          (coll? v) (doseq [vv v] (walk vv))
          :else nil))
      x)
@@ -662,7 +662,7 @@ td.oc-edn { font-family: var(--font-family-mono); font-size: 12px; word-break: b
             (sec "provenance" "10. このページの出所"
                  "掲示した値がどこから来たか。"
                  (tbl (hrow "項目" "値")
-                      [(row "生成器" (str "<code>src/hhproductionops/render_html.clj</code> (<code>clojure -M:dev:render-html</code>)"))
+                      [(row "生成器" "<code>src/hhproductionops/render_html.clj</code> (<code>clojure -M:dev:render-html</code>)")
                        (row "実行したグラフ" "<code>hhproductionops.operation/build</code> → <code>langgraph.graph/run*</code>")
                        (row "store" "<code>hhproductionops.store/seed-db</code> (MemStore、seed 世帯 3 件)")
                        (row "助言者" "<code>hhproductionops.advisor/mock-advisor</code> (決定論的モック) ＋ 本ページ内で定義した 3 つの逸脱助言者")
