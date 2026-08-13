@@ -503,8 +503,16 @@ td.oc-edn { font-family: var(--font-family-mono); font-size: 12px; word-break: b
             (sec "hard-holds" (str "2. HARD governor 拒否 (" (count hard) " 件)")
                  "永久・上書き不能。人間の承認でも通せない。各件の `rule`/`detail` は governor が実際に返した違反レコード。"
                  (str/join
-                  (for [{:keys [id title request verdict facts]} hard
-                        :let [f (first facts)]]
+                  (for [{:keys [id title request verdict facts proposal]} hard
+                        :let [f (first facts)
+                              ;; Derived, not asserted: a governor `:detail` can read
+                              ;; "nil が提案された" because the ADVISOR returned a
+                              ;; proposal with no such key -- not because this renderer
+                              ;; failed to fill a slot. Name the absent keys from the
+                              ;; proposal the actor actually produced, so the page
+                              ;; stops saying this the moment the advisor starts
+                              ;; supplying them.
+                              absent (remove #(contains? proposal %) [:op :effect])]]
                     (str "<div class=\"oc-hard\">"
                          "<h3>" (esc id) " · " (esc title) "</h3>"
                          "<p>要求: <code>" (esc (:op request)) "</code> / <code>" (esc (:household-id request)) "</code>"
@@ -515,6 +523,13 @@ td.oc-edn { font-family: var(--font-family-mono); font-size: 12px; word-break: b
                          (str/join
                           (for [v (:violations f)]
                             (str "<p><b>" (esc (:rule v)) "</b> — " (esc (:detail v)) "</p>")))
+                         (when (seq absent)
+                           (str "<p class=\"oc-sub\">上の <code>nil</code> は描画の未充填ではない: "
+                                "助言者が返した提案に "
+                                (str/join "・" (map #(str "<code>" (esc %) "</code>") absent))
+                                " のキーが存在しない (提案キー: <code>"
+                                (esc (edn (vec (sort (keys proposal)))))
+                                "</code>)。governor はその不在値をそのまま違反として報告している。</p>"))
                          "</div>"))))
 
             ;; --- 3. phase gate holds ---
