@@ -47,7 +47,7 @@
   something. If someone later changes what the store retains, the page
   changes with it."
   (:require [clojure.java.io :as io]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [hhproductionops.advisor :as advisor]
             [hhproductionops.governor :as governor]
             [hhproductionops.operation :as op]
@@ -292,7 +292,7 @@
        (cond
          (map? v) (doseq [[k vv] v]
                     (when (and (keyword? k)
-                               (str/includes? (str/lower-case (name k)) "approv"))
+                               (str/includes? (str/lower (name k)) "approv"))
                       (swap! acc conj k))
                     (walk vv))
          (coll? v) (doseq [vv v] (walk vv))
