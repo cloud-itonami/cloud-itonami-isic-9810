@@ -7,7 +7,7 @@ direct field/production-work execution, and programme-enrollment
 suspension/termination (see README.md).
 
 - All code must be `.cljc` (portable Clojure, no JVM-only constructs).
-- Tests must pass: `clojure -M:test`
+- Tests must pass: `kbb -M:test`
 - Commit messages should link to relevant ADRs or issues.
 
 **This actor does NOT:**

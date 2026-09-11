@@ -86,16 +86,16 @@ guarding against it.
 
 ```bash
 # Install dependencies (if inside the superproject, use :dev alias for local overrides)
-clojure -M:dev -P
+kbb -M:dev -P
 
 # Run tests
-clojure -M:dev:test
+kbb -M:dev:test
 
 # Run linter
-clojure -M:lint
+kbb -M:lint
 
 # Run demo
-clojure -M:run
+kbb -M:run
 ```
 
 ## Test suite
